@@ -1,0 +1,4 @@
+node_modules/
+index_old.html
+app-env
+.env
