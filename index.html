@@ -145,6 +145,7 @@
                             class="btn btn-primary"><i class="fa fa-sync"></i> Sync</button>
                         <button id="hostbutton" onclick="changeHost(roomnum)" style="margin-top:.5rem"
                             class="btn btn-primary"><i class="fas fa-users"></i> Make me the host!</button>
+                            <button style="margin-top:.5rem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#onlineModal">online</button>
                     </div>
 
                     <!-- Div for lights off! -->
@@ -210,13 +211,6 @@
                     <hr style="height:0pt; visibility:hidden;" />
 
                     <!-- <br/> -->
-                    <div class="col-md-13">
-                        <div class="well online-users noscrollbar">
-                            <ul class="list-group" id="users"></ul>
-                        </div>
-
-                        <!-- Trigger the modal with a button -->
-                    </div>
                     <hr style="height:0pt; visibility:hidden;" />
 
                     <!-- Modal -->
@@ -250,6 +244,29 @@
                     </div>
                     <!-- </div> -->
                     <!-- </div> -->
+                    <div id="onlineModal" class="modal fade test" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Online</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="test col-md-13">
+                                        <div class="well online-users noscrollbar">
+                                            <ul class="list-group" id="users"></ul>
+                                        </div>
+                
+                                        <!-- Trigger the modal with a button -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
 
                     <div id="messageArea" class="row">
                         <br />

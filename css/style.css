@@ -4,6 +4,10 @@
      color:white;
  }
 
+ .test {
+
+ }
+
  #roomArea {
      display: none;
      margin-bottom: 5em;
@@ -212,7 +216,11 @@
  .message-well {
      margin-bottom: 8px !important;
  }
-
+.test {
+    width: 100%;
+    height: 100%;
+    color:black;
+}
  .chat-form {
      position: relative;
      width: 207%;
@@ -222,7 +230,7 @@
  }
 
  .online-users {
-     display: none;
+     display: block;
      padding: 5px !important;
      float: right;
      /* padding-right: 11em; */
