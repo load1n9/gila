@@ -63,7 +63,9 @@
 
         <!-- Loading page -->
         <!-- Loader is currently dependent on the dailymotion api because it is the slowest -->
-        <div id="loading"></div>
+        <div id="loading">
+            <div class="lds-heart"><div></div></div>
+        </div>
 
         <!-- User Form (First Page) -->
         <div id="userFormArea" class="row">
@@ -136,20 +138,15 @@
                     <!----------------------------------- PLAYER AREA ----------------------------------->
                     <!-- <hr> -->
 
-                    <div>
-                        <button id="playButton" onclick="playVideo(roomnum)" style="margin-top:.5rem"
-                            class="btn btn-primary"><i class="fa fa-play"></i> Play / <i class="fa fa-pause"></i>
-                            Pause</button>
-
-                        <button id="syncbutton" onclick="syncVideo(roomnum);syncAlert()" style="margin-top:.5rem"
-                            class="btn btn-primary"><i class="fa fa-sync"></i> Sync</button>
-                        <button id="hostbutton" onclick="changeHost(roomnum)" style="margin-top:.5rem"
-                            class="btn btn-primary"><i class="fas fa-users"></i> Make me the host!</button>
-                            <button style="margin-top:.5rem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#onlineModal">online</button>
+                    <div id= "top-controls">
+                        <span  id="playButton" onclick="playVideo(roomnum)" style="margin-top:.5rem" class="material-icons md-48 md-light invite-button">play_circle</span>
+                        <span id="syncbutton" onclick="syncVideo(roomnum);syncAlert()" style="margin-top:.5rem"
+                            class="material-icons md-48 md-light invite-button">sync</span>
+                        <span id="hostbutton" onclick="changeHost(roomnum)" style="margin-top:.5rem"
+                            class="material-icons md-48 md-light invite-button">airplanemode_active</span>
+                        <span style="margin-top:.5rem; margin-left:.5rem" class="material-icons md-48 md-light invite-button" data-toggle="modal" data-target="#onlineModal">group</span>
                     </div>
 
-                    <!-- Div for lights off! -->
-                    <div id='persoff'></div>
 
                     <div class="topbotmargins">
                         <input type="Video"
