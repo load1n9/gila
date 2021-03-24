@@ -9,6 +9,7 @@ socket.on('setHost', function(data) {
     console.log("You are the new host!")
     host = true
 });
+
 // Unsets the host
 socket.on('unSetHost', function(data) {
     console.log("Unsetting host")
@@ -20,12 +21,13 @@ socket.on('getData', function(data) {
     console.log("Hi im the host, you called?")
     socket.emit('sync host', {});
 });
+
 // Calls sync
 socket.on('syncHost', function(data) {
     syncVideo(roomnum)
 });
 
-//Change the host
+// Change the host
 function changeHost(roomnum) {
     if (!host){
         socket.emit('change host', {

@@ -5,7 +5,8 @@
 
 function playOther(roomnum) {
     socket.emit('play other', {
-        room: roomnum
+        room: roomnum,
+        id: document.getElementById("inputVideoId").value
     });
 }
 
@@ -22,14 +23,7 @@ function pauseOther(roomnum) {
 }
 
 socket.on('justPause', function(data) {
-    switch (currPlayer) {
-        case 0:
-            player.pauseVideo()
-            break;
-        case 3:
-            media.pause()
-            break;
-    }
+    media.pause()
     player.pauseVideo()
 });
 
@@ -39,7 +33,6 @@ function seekOther(roomnum, currTime) {
         time: currTime
     });
 }
-
 
 // Weird for YouTube because there is no built in seek event
 // It seeks on an buffer event
@@ -51,22 +44,3 @@ socket.on('justSeek', function(data) {
         media.currentTime = currTime
     }
 });
-
-// Needs to grab the next video id and change the video
-function playNext(roomnum) {
-    socket.emit('play next', {}, function(data) {
-        var videoId = data.videoId
-
-        // If queue is empty do not try to change
-        if (videoId !== "QUEUE IS EMPTY") {
-            // Change the video
-            socket.emit('change video', {
-                room: roomnum,
-                videoId: videoId,
-                time: 0
-            })
-        } else {
-            playNextAlert()
-        }
-    })
-}
