@@ -203,7 +203,39 @@ let svg = [
     {
         input: ":youtube:",
         output: `<i class="bi-youtube"></i>`
-    }
+    },
+    {
+        input: ":javascript:",
+        output: `<i class="fab fa-js-square"></i>`
+    },
+    {
+        input: ":js:",
+        output: `<i class="fab fa-js-square"></i>`
+    },
+    {
+        input: ":pepper:",
+        output: `<i class="fab fa-pepper-hot"></i>`
+    },
+    {
+        input: ":chili:",
+        output: `<i class="fab fa-pepper-hot"></i>`
+    },
+    {
+        input: ":rust:",
+        output: `<i class="fab fa-rust"></i>`
+    },
+    {
+        input: ":react:",
+        output: `<i class="fab fa-react"></i>`
+    },
+    {
+        input: ":bootstrap:",
+        output: `<i class="fab fa-bootstrap"></i>`
+    },
+    {
+        input: ":angular:",
+        output: `<i class="fab fa-angular"></i>`
+    }, 
 ];
 class EmoteParser {
     constructor(text1){
@@ -228,5 +260,4 @@ class GilaMarkdown2 {
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
-
-module.exports = GilaMarkdown1 
+module.exports =  GilaMarkdown1

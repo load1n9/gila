@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Gila monster</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"
+    />
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -20,426 +25,552 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <!-- Font awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/da04aa3a51.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- Custom styles for this template -->
-    <link href="css/small-business.css" rel="stylesheet">
+    <link href="css/small-business.css" rel="stylesheet" />
 
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/mobile-style.css" rel="stylesheet">
-    <link href="css/html5player.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/mobile-style.css" rel="stylesheet" />
+    <link href="css/html5player.css" rel="stylesheet" />
+  </head>
 
-</head>
-
-<body id="Home">
-
+  <body id="Home">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#Home">Gila</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a id="chat-nav" class="nav-link" ><span class="material-icons md-36 md-light">light_mode</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="about-nav" class="nav-link" ><span class="material-icons md-36 md-light">add_circle</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="contact-nav" class="nav-link"><span data-toggle="modal"
-                            data-target="#inviteModal"class="material-icons md-36 md-light invite-button">person_add</span></a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#Home">Gila</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a id="chat-nav" class="nav-link"
+                ><span class="material-icons md-36 md-light"
+                  >light_mode</span
+                ></a
+              >
+            </li>
+            <li class="nav-item">
+              <a id="about-nav" class="nav-link"
+                ><span class="material-icons md-36 md-light"
+                  >add_circle</span
+                ></a
+              >
+            </li>
+            <li class="nav-item">
+              <a id="contact-nav" class="nav-link"
+                ><span
+                  data-toggle="modal"
+                  data-target="#inviteModal"
+                  class="material-icons md-36 md-light invite-button"
+                  >person_add</span
+                ></a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Page Content -->
     <div class="container">
-
-        <!-- Loading page -->
-        <!-- Loader is currently dependent on the dailymotion api because it is the slowest -->
-        <!--div id="loading">
+      <!-- Loading page -->
+      <!-- Loader is currently dependent on the dailymotion api because it is the slowest -->
+      <!--div id="loading">
             <div class="lds-heart"><div></div></div>
         </div-->
 
-        <!-- User Form (First Page) -->
-        <div id="userFormArea" class="row">
-            <div class="col-md-12">
-                <!-- ADD DESCRIPTION HERE -->
-                <h2>Welcome to Gila monster streaming thing</h2>
-                <hr style="height:20pt; visibility:hidden;" />
+      <!-- User Form (First Page) -->
+      <div id="userFormArea" class="row">
+        <div class="col-md-12">
+          <!-- ADD DESCRIPTION HERE -->
+          <h2>Welcome to Gila monster streaming thing</h2>
+          <hr style="height: 20pt; visibility: hidden" />
 
-                <h2> Join a Room! </h2>
-                <form id="userForm">
-                    <div class="form-group">
-                        <p style="color:red; margin-bottom: 0px" id="missinginfo"></p>
-                        <label>Enter Name</label>
-                        <input class="form-control" id="username" />
-                        <br />
-                        <p style="color:red; margin-bottom: 0px" id="missinginfo2"></p>
-                        <label>Enter Room ID (Default 1)</label>
-                        <button type="button" onClick="randomroom()" class="btn btn-primary random">Random</button>
-                        <br />
-                        <input class="form-control" id="roomnum" />
-                        <br />
+          <h2>Join a Room!</h2>
+          <form id="userForm">
+            <div class="form-group">
+              <p style="color: red; margin-bottom: 0px" id="missinginfo"></p>
+              <label>Enter Name</label>
+              <input class="form-control" id="username" />
+              <br />
+              <p style="color: red; margin-bottom: 0px" id="missinginfo2"></p>
+              <label>Enter Room ID (Default 1)</label>
+              <button
+                type="button"
+                onClick="randomroom()"
+                class="btn btn-primary random"
+              >
+                Random
+              </button>
+              <br />
+              <input class="form-control" id="roomnum" />
+              <br />
 
-                        <input style="margin-top: 10px;" type="submit" class="btn btn-primary" value="Enter" />
-                        <hr style="height:65pt; visibility:hidden;" />
+              <input
+                style="margin-top: 10px"
+                type="submit"
+                class="btn btn-primary"
+                value="Enter"
+              />
+              <hr style="height: 65pt; visibility: hidden" />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="roomArea">
+        <!-- Heading Row -->
+        <div class="row my-4" style="margin-top: 0px !important">
+          <div class="col-lg-7">
+            <!----------------------------------- PLAYER AREA ----------------------------------->
+
+            <div id="PlayerArea">
+              <div class="html5player">
+                <video
+                  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                  width="640"
+                  height="360"
+                  class="video html5video"
+                  id="html5src"
+                  controls
+                ></video>
+              </div>
+            </div>
+
+            <!----------------------------------- PLAYER AREA ----------------------------------->
+            <!-- <hr> -->
+
+            <div id="top-controls">
+              <span
+                id="playButton"
+                onclick="playVideo(roomnum)"
+                style="margin-top: 0.5rem"
+                class="material-icons md-48 md-light invite-button"
+                >play_circle</span
+              >
+              <span
+                id="syncbutton"
+                onclick="syncVideo(roomnum);syncAlert()"
+                style="margin-top: 0.5rem"
+                class="material-icons md-48 md-light invite-button"
+                >sync</span
+              >
+              <span
+                id="hostbutton"
+                onclick="changeHost(roomnum)"
+                style="margin-top: 0.5rem"
+                class="material-icons md-48 md-light invite-button"
+                >airplanemode_active</span
+              >
+              <span
+                style="margin-top: 0.5rem; margin-left: 0.5rem"
+                class="material-icons md-48 md-light invite-button"
+                data-toggle="modal"
+                data-target="#onlineModal"
+                >group</span
+              >
+            </div>
+
+            <div class="topbotmargins">
+              <input
+                type="Video"
+                style="
+                  max-width: 200px;
+                  margin-right: 0.5rem;
+                  margin-bottom: 0.5rem;
+                  float: left;
+                "
+                class="form-control"
+                id="inputVideoId"
+                placeholder="Video ID / URL"
+              />
+            </div>
+          </div>
+
+          <div>
+            <hr style="height: 0pt; visibility: hidden" />
+
+            <hr style="height: 0pt; visibility: hidden" />
+
+            <!-- Modal -->
+            <div id="inviteModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content bg-dark">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Invite a Friend</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      Send a friend your unique room link so they can watch
+                      videos too!
+                    </p>
+                    <input
+                      class="inv_input"
+                      id="inv_input"
+                      type="text"
+                      value="ROOMNUM"
+                      class="field left"
+                      readonly
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <div style="opacity: 1" class="tooltip">
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        onclick="copyInvite()"
+                        onmouseout="outFunc()"
+                      >
+                        <span class="tooltiptext" id="myTooltip"
+                          >Copy to clipboard</span
+                        ><i class="fas fa-clipboard"></i> Copy to Clipboard
+                      </button>
                     </div>
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="onlineModal" class="modal fade test" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Online</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="test col-md-13">
+                      <div class="well online-users noscrollbar">
+                        <ul class="list-group" id="users"></ul>
+                      </div>
+                      <!-- Trigger the modal with a button -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="messageArea" class="row">
+              <br />
+              <div class="col-md-12">
+                <div class="chat noscrollbar" id="chat"></div>
+                <form id="messageForm">
+                  <div class="form-group">
+                    <br />
+                    <input
+                      class="form-control chat-form"
+                      id="message"
+                      placeholder="Enter Message..."
+                    />
+                    <br />
+                    <br />
+                  </div>
                 </form>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div id="roomArea">
-            <!-- Heading Row -->
-            <div class="row my-4" style="margin-top: 0px !important;">
-                <div class="col-lg-7">
-                    <!----------------------------------- PLAYER AREA ----------------------------------->
-
-                    <div id='PlayerArea'>
-                        <div class="html5player">
-                            <video
-                                src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                                width="640" height="360" class="video html5video" id="html5src" controls>
-                            </video>
-                        </div>
-                    </div>
-
-                    <!----------------------------------- PLAYER AREA ----------------------------------->
-                    <!-- <hr> -->
-
-                    <div id= "top-controls">
-                        <span  id="playButton" onclick="playVideo(roomnum)" style="margin-top:.5rem" class="material-icons md-48 md-light invite-button">play_circle</span>
-                        <span id="syncbutton" onclick="syncVideo(roomnum);syncAlert()" style="margin-top:.5rem"
-                            class="material-icons md-48 md-light invite-button">sync</span>
-                        <span id="hostbutton" onclick="changeHost(roomnum)" style="margin-top:.5rem"
-                            class="material-icons md-48 md-light invite-button">airplanemode_active</span>
-                        <span style="margin-top:.5rem; margin-left:.5rem" class="material-icons md-48 md-light invite-button" data-toggle="modal" data-target="#onlineModal">group</span>
-                    </div>
-
-
-                    <div class="topbotmargins">
-                        <input type="Video"
-                            style="max-width: 200px; margin-right: .5rem; margin-bottom: .5rem; float: left;"
-                            class="form-control" id="inputVideoId" placeholder="Video ID / URL">
-                    </div>
-                </div>
-
-                <div>
-                    <hr style="height:0pt; visibility:hidden;" />
-
-                    <hr style="height:0pt; visibility:hidden;" />
-
-                    <!-- Modal -->
-                    <div id="inviteModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content bg-dark">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Invite a Friend</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Send a friend your unique room link so they can watch videos too!</p>
-                                    <input class="inv_input" id="inv_input" type="text"
-                                        value="ROOMNUM" class="field left" readonly>
-                                </div>
-                                <div class="modal-footer">
-                                    <div style="opacity: 1" class="tooltip">
-                                        <button type="button" class="btn btn-default" onclick="copyInvite()"
-                                            onmouseout="outFunc()"><span class="tooltiptext" id="myTooltip">Copy to
-                                                clipboard</span><i class="fas fa-clipboard"></i> Copy to
-                                            Clipboard</button>
-                                    </div>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div id="onlineModal" class="modal fade test" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Online</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="test col-md-13">
-                                        <div class="well online-users noscrollbar">
-                                            <ul class="list-group" id="users"></ul>
-                                        </div>
-                                        <!-- Trigger the modal with a button -->
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div id="messageArea" class="row">
-                        <br />
-                        <div class="col-md-12">
-                            <div class="chat noscrollbar" id="chat"></div>
-                            <form id="messageForm">
-                                <div class="form-group">
-                                    <br />
-                                    <input class="form-control chat-form" id="message" placeholder="Enter Message..." />
-                                    <br />
-                                    <br />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      </div>
     </div>
 
-
     <script>
-        var socket = io.connect();
-        var roomnum = 1
-        var id = "M7lc1UVf-VE"
-        var username = ""
-        // Don't allow trailing or leading whitespace!
-        var nosymbols = new RegExp("^(([a-zA-Z0-9_-][a-zA-Z0-9 _-]*[a-zA-Z0-9_-])|([a-zA-Z0-9_-]*))$");
+      var socket = io.connect();
+      var roomnum = 1;
+      var id = "M7lc1UVf-VE";
+      var username = "";
+      // Don't allow trailing or leading whitespace!
+      var nosymbols = new RegExp(
+        "^(([a-zA-Z0-9_-][a-zA-Z0-9 _-]*[a-zA-Z0-9_-])|([a-zA-Z0-9_-]*))$"
+      );
 
-        // Chat stuff
-        $(function () {
-            var $messageForm = $('#messageForm');
-            var $message = $('#message');
-            var $chat = $('#chat');
-            var $roomArea = $('#roomArea');
-            var $userFormArea = $('#userFormArea');
-            var $userForm = $('#userForm');
-            var $users = $('#users');
-            var $username = $('#username');
-            var $roomnum = $('#roomnum');
+      // Chat stuff
+      $(function () {
+        var $messageForm = $("#messageForm");
+        var $message = $("#message");
+        var $chat = $("#chat");
+        var $roomArea = $("#roomArea");
+        var $userFormArea = $("#userFormArea");
+        var $userForm = $("#userForm");
+        var $users = $("#users");
+        var $username = $("#username");
+        var $roomnum = $("#roomnum");
 
-            var $vidlist = $('#vidlist');
+        var $vidlist = $("#vidlist");
 
-            $messageForm.submit(function (e) {
-                e.preventDefault();
-                socket.emit('send message', $message.val());
-                $message.val('');
-            });
-
-            socket.on('new message', function (data) {
-                var last_div = $('.chat > div:last')[0]
-
-                // This checks for the last user
-                // If you are the last user, attach the message instead of creating a new div
-                if (last_div !== undefined) {
-                    var myRegex = /.*<strong>(.+)<\/strong>.*/g
-                    var match = myRegex.exec(last_div.innerHTML)
-                    var last_user = ""
-                    if (match != null) {
-                        last_user = match[1]
-                    }
-                }
-                if (data.user != last_user) {
-                    $chat.append('<div class="well well-sm message-well"><strong>' + data.user +
-                        '</strong>: ' + data.msg + '</div>');
-                }
-                // If you sent the last message, append to previous
-                else {
-                    last_div.innerHTML = last_div.innerHTML + " <br> " + data.msg
-                }
-                // $chat.scrollTop = $chat.scrollHeight;
-                // Auto scroll on each message send!
-                $('div#chat').scrollTop($('div#chat')[0].scrollHeight)
-            });
-
-            // Submit user form
-            $userForm.submit(function (e) {
-                e.preventDefault();
-                // If name not entered
-                if ($username.val() == "") {
-                    var noname = document.getElementById('missinginfo')
-                    noname.innerHTML = "Surely you have a name right? Enter it below!"
-                }
-                // If name is too long
-                else if ($username.val().length > 30) {
-                    var noname = document.getElementById('missinginfo')
-                    noname.innerHTML = "Your name can't possibly be over 30 characters!"
-                }
-                // If roomnate
-                else if ($roomnum.val().length > 50) {
-                    var noname = document.getElementById('missinginfo')
-                    noname.innerHTML =
-                        "How are you going to remember a room code that has more than 50 characters?"
-                }
-                // If Room contains symbols
-                // Can only be reached if the user decided to be sneaky and paste them!
-                else if (!nosymbols.test($roomnum.val())) {
-                    var noname = document.getElementById('missinginfo')
-                    noname.innerHTML = ""
-                    var noname2 = document.getElementById('missinginfo2')
-                    noname2.innerHTML =
-                        "Please enter a room ID without symbols or leading/trailing whitespace!"
-                } else {
-                    username = $username.val()
-                    socket.emit('new user', $username.val(), function (data) {
-                        if (data) {
-                            $userFormArea.hide();
-                            $roomArea.show();
-                            // Show header buttons!
-                            document.getElementById('chat-nav').style.display = 'block';
-                            document.getElementById('about-nav').style.display = 'block';
-                            document.getElementById('contact-nav').style.display = 'block';
-
-                            // No longer using initarea
-                            // var initStuff = document.getElementById("initArea")
-                            // initStuff.innerHTML = ""
-
-                            // This sets the room number on the client
-                            if ($roomnum.val() != "") {
-                                roomnum = $roomnum.val()
-                            }
-
-                            // Sets the invite link (roomnum)
-                            document.getElementById("inv_input").value = `https://gilamonster.herokuapp.com/${roomnum}`;
-                            history.pushState('', 'Gila', roomnum);
-
-                        }
-                    });
-                    // Join room
-                    socket.emit('new room', $roomnum.val(), function (data) {
-                        // This should only call back if the client is the host
-                        if (data) {
-                            syncVideo(roomnum)
-                        }
-                    });
-
-                    $username.val('');
-                }
-            });
-
-            socket.on('get users', function (data) {
-                var html = '';
-                for (i = 0; i < data.length; i++) {
-                    html += '<li style="padding-right: 10em;" class="list-group-item chat-users">' +
-                        data[i] + '</li>';
-                    // html += '<div class="well well-sm message-well">' + data[i] + '</div>';
-                    // <div class="well well-sm message-well"><strong>
-                }
-
-                $users.html(html)
-            });
-
-            // Prevent special characters from being typed
-            $('#roomnum').on('keypress', function (event) {
-                var nosymbols = new RegExp("^[a-zA-Z0-9\s]+$");
-                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                // Allow enters and spaces to be used still
-                if ($roomnum.val().length > 50 || !nosymbols.test(key) && event.keyCode != 13 && event
-                    .keyCode != 32 && event.keyCode != 45 && event.keyCode != 95) {
-                    event.preventDefault();
-                    return false;
-                }
-            });
-
-            // Prevent special characters from being typed
-            $('#username').on('keypress', function (event) {
-                var nosymbols = new RegExp("^[a-zA-Z0-9\s]+$");
-                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                // Allow enters and spaces to be used still
-                if ($username.val().length > 30 || !nosymbols.test(key) && event.keyCode != 13 && event
-                    .keyCode != 32 && event.keyCode != 45 && event.keyCode != 95) {
-                    event.preventDefault();
-                    return false;
-                }
-            });
-
+        $messageForm.submit(function (e) {
+          e.preventDefault();
+          socket.emit("send message", $message.val());
+          $message.val("");
         });
 
-        // Remove the video from the queue at idx
-        function removeAt(idx) {
-            socket.emit('remove at', {
-                idx: idx
-            })
-        }
+        socket.on("new message", function (data) {
+          var last_div = $(".chat > div:last")[0];
 
-        function playAt(idx) {
-            socket.emit('play at', {
-                idx: idx
-            }, function (data) {
-                var videoId = data.videoId
-
-                // Change the video
-                socket.emit('change video', {
-                    room: roomnum,
-                    videoId: videoId,
-                    time: 0
-                })
-            })
-        }
-
-        // Turn off the lights!
-        var per = 0;
-        $(document).ready(function () {
-            $("#persoff").css("height", $(document).height()).hide();
-            $(document).click(function (e) {
-                if (!$(e.target).hasClass('switch') && per == 1) {
-                    $("#persoff").toggle();
-                    per = 0;
-                }
-            });
-            $(".switch").click(function () {
-                $("#persoff").toggle();
-                per += 1;
-                if (per == 2) {
-                    per = 0;
-                }
-            });
-        });
-
-        // Set ID
-        socket.on('set id', function (data) {
-            // Ensure no valid id too
-            if (data.id != "" && nosymbols.test(data.id)) {
-                document.getElementById('roomnum').value = data.id
-                // Probably should not force it to be readonly
+          // This checks for the last user
+          // If you are the last user, attach the message instead of creating a new div
+          if (last_div !== undefined) {
+            var myRegex = /.*<strong>(.+)<\/strong>.*/g;
+            var match = myRegex.exec(last_div.innerHTML);
+            var last_user = "";
+            if (match != null) {
+              last_user = match[1];
             }
-            // Reset url for next person
-            // Workaround
-            socket.emit('reset url')
+          }
+          if (data.user != last_user) {
+            $chat.append(
+              '<div class="well well-sm message-well"><strong>' +
+                data.user +
+                "</strong>: " +
+                data.msg +
+                "</div>"
+            );
+          }
+          // If you sent the last message, append to previous
+          else {
+            last_div.innerHTML = last_div.innerHTML + " <br> " + data.msg;
+          }
+          // $chat.scrollTop = $chat.scrollHeight;
+          // Auto scroll on each message send!
+          $("div#chat").scrollTop($("div#chat")[0].scrollHeight);
         });
 
-        function copyInvite() {
-            /* Get the text field */
-            var copyText = document.getElementById("inv_input");
-            /* Select the text field */
-            copyText.select();
-            /* Copy the text inside the text field */
-            document.execCommand("Copy");
-            /* Alert the copied text */
-            // alert("Copied the text: " + copyText.value);
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "Copied!";
-        }
+        // Submit user form
+        $userForm.submit(function (e) {
+          e.preventDefault();
+          // If name not entered
+          if ($username.val() == "") {
+            var noname = document.getElementById("missinginfo");
+            noname.innerHTML = "Surely you have a name right? Enter it below!";
+          }
+          // If name is too long
+          else if ($username.val().length > 30) {
+            var noname = document.getElementById("missinginfo");
+            noname.innerHTML =
+              "Your name can't possibly be over 30 characters!";
+          }
+          // If roomnate
+          else if ($roomnum.val().length > 50) {
+            var noname = document.getElementById("missinginfo");
+            noname.innerHTML =
+              "How are you going to remember a room code that has more than 50 characters?";
+          }
+          // If Room contains symbols
+          // Can only be reached if the user decided to be sneaky and paste them!
+          else if (!nosymbols.test($roomnum.val())) {
+            var noname = document.getElementById("missinginfo");
+            noname.innerHTML = "";
+            var noname2 = document.getElementById("missinginfo2");
+            noname2.innerHTML =
+              "Please enter a room ID without symbols or leading/trailing whitespace!";
+          } else {
+            username = $username.val();
+            socket.emit("new user", $username.val(), function (data) {
+              if (data) {
+                $userFormArea.hide();
+                $roomArea.show();
+                // Show header buttons!
+                document.getElementById("chat-nav").style.display = "block";
+                document.getElementById("about-nav").style.display = "block";
+                document.getElementById("contact-nav").style.display = "block";
 
-        function outFunc() {
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "Copy to clipboard";
-        }
+                // No longer using initarea
+                // var initStuff = document.getElementById("initArea")
+                // initStuff.innerHTML = ""
 
-        // Generate a random alphanumeric room id
-        function randomroom() {
-            document.getElementById('roomnum').value = Math.random().toString(36).substr(2, 12)
+                // This sets the room number on the client
+                if ($roomnum.val() != "") {
+                  roomnum = $roomnum.val();
+                }
+
+                // Sets the invite link (roomnum)
+                document.getElementById(
+                  "inv_input"
+                ).value = `https://gilamonster.herokuapp.com/${roomnum}`;
+                history.pushState("", "Gila", roomnum);
+              }
+            });
+            // Join room
+            socket.emit("new room", $roomnum.val(), function (data) {
+              // This should only call back if the client is the host
+              if (data) {
+                syncVideo(roomnum);
+              }
+            });
+
+            $username.val("");
+          }
+        });
+
+        socket.on("get users", function (data) {
+          var html = "";
+          for (i = 0; i < data.length; i++) {
+            html +=
+              '<li style="padding-right: 10em;" class="list-group-item chat-users">' +
+              data[i] +
+              "</li>";
+            // html += '<div class="well well-sm message-well">' + data[i] + '</div>';
+            // <div class="well well-sm message-well"><strong>
+          }
+
+          $users.html(html);
+        });
+
+        // Prevent special characters from being typed
+        $("#roomnum").on("keypress", function (event) {
+          var nosymbols = new RegExp("^[a-zA-Z0-9\s]+$");
+          var key = String.fromCharCode(
+            !event.charCode ? event.which : event.charCode
+          );
+          // Allow enters and spaces to be used still
+          if (
+            $roomnum.val().length > 50 ||
+            (!nosymbols.test(key) &&
+              event.keyCode != 13 &&
+              event.keyCode != 32 &&
+              event.keyCode != 45 &&
+              event.keyCode != 95)
+          ) {
+            event.preventDefault();
+            return false;
+          }
+        });
+
+        // Prevent special characters from being typed
+        $("#username").on("keypress", function (event) {
+          var nosymbols = new RegExp("^[a-zA-Z0-9\s]+$");
+          var key = String.fromCharCode(
+            !event.charCode ? event.which : event.charCode
+          );
+          // Allow enters and spaces to be used still
+          if (
+            $username.val().length > 30 ||
+            (!nosymbols.test(key) &&
+              event.keyCode != 13 &&
+              event.keyCode != 32 &&
+              event.keyCode != 45 &&
+              event.keyCode != 95)
+          ) {
+            event.preventDefault();
+            return false;
+          }
+        });
+      });
+
+      // Remove the video from the queue at idx
+      function removeAt(idx) {
+        socket.emit("remove at", {
+          idx: idx,
+        });
+      }
+
+      function playAt(idx) {
+        socket.emit(
+          "play at",
+          {
+            idx: idx,
+          },
+          function (data) {
+            var videoId = data.videoId;
+
+            // Change the video
+            socket.emit("change video", {
+              room: roomnum,
+              videoId: videoId,
+              time: 0,
+            });
+          }
+        );
+      }
+
+      // Turn off the lights!
+      var per = 0;
+      $(document).ready(function () {
+        $("#persoff").css("height", $(document).height()).hide();
+        $(document).click(function (e) {
+          if (!$(e.target).hasClass("switch") && per == 1) {
+            $("#persoff").toggle();
+            per = 0;
+          }
+        });
+        $(".switch").click(function () {
+          $("#persoff").toggle();
+          per += 1;
+          if (per == 2) {
+            per = 0;
+          }
+        });
+      });
+
+      // Set ID
+      socket.on("set id", function (data) {
+        // Ensure no valid id too
+        if (data.id != "" && nosymbols.test(data.id)) {
+          document.getElementById("roomnum").value = data.id;
+          // Probably should not force it to be readonly
         }
+        // Reset url for next person
+        // Workaround
+        socket.emit("reset url");
+      });
+
+      function copyInvite() {
+        /* Get the text field */
+        var copyText = document.getElementById("inv_input");
+        /* Select the text field */
+        copyText.select();
+        /* Copy the text inside the text field */
+        document.execCommand("Copy");
+        /* Alert the copied text */
+        // alert("Copied the text: " + copyText.value);
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied!";
+      }
+
+      function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+      }
+
+      // Generate a random alphanumeric room id
+      function randomroom() {
+        document.getElementById("roomnum").value = Math.random()
+          .toString(36)
+          .substr(2, 12);
+      }
     </script>
 
     <!-- Bootstrap core JavaScript -->
@@ -450,7 +581,6 @@
     <!-- Plugin JavaScript -->
     <script src="js/dependencies/jquery.easing.min.js"></script>
 
-
     <!-- My JS files -->
     <script src="js/sync.js"></script>
     <script src="js/player.js"></script>
@@ -460,5 +590,5 @@
 
     <!-- HTML5 Player -->
     <script src="js/html5.js"></script>
-</body>
+  </body>
 </html>
