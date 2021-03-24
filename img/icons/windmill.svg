@@ -1,0 +1,11 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 150px; height: 150px;"><style>
+     .line-windmill1 {animation:line-windmill1-spin 2s infinite linear; transform-origin: 50px 40px;}
+     @keyframes line-windmill1-spin {
+         100%{transform:rotate(360deg);}
+     }
+     @media (prefers-reduced-motion: reduce) {
+         .line-windmill1 {
+             animation: none;
+         }
+     }
+    </style><path class="stroke1 fill1" d="M42.1595 97.9247L45.9274 48H54.0726L57.8405 97.9247C57.8843 98.505 57.4253 99 56.8434 99H43.1566C42.5747 99 42.1157 98.505 42.1595 97.9247Z" fill="rgba(0,0,0,1)" stroke="rgba(255,255,255,1)" stroke-width="2px" style="animation-duration: 2s;"></path><g class="line-windmill1" style="animation-duration: 2s;"><path class="stroke2 fill2" d="M55 10.5V31H46V10.5C46 8.01472 48.0147 6 50.5 6C52.9853 6 55 8.01472 55 10.5Z" fill="rgba(0,0,0,1)" stroke="rgba(255,255,255,1)" stroke-width="2px"></path><path class="stroke2 fill2" d="M22.3218 51.6029L40.0753 41.3529L44.5753 49.1471L26.8218 59.3971C24.6695 60.6397 21.9173 59.9023 20.6747 57.75C19.432 55.5977 20.1695 52.8455 22.3218 51.6029Z" fill="rgba(0,0,0,1)" stroke="rgba(255,255,255,1)" stroke-width="2px"></path><path class="stroke2 fill2" d="M74.1782 59.3971L56.4247 49.1471L60.9247 41.3528L78.6782 51.6028C80.8305 52.8455 81.568 55.5976 80.3253 57.75C79.0827 59.9023 76.3305 60.6397 74.1782 59.3971Z" fill="rgba(0,0,0,1)" stroke="rgba(255,255,255,1)" stroke-width="2px"></path><circle class="stroke2 fill2" cx="50.5" cy="40.5" r="11.5" fill="rgba(0,0,0,1)" stroke="rgba(255,255,255,1)" stroke-width="2px"></circle></g></svg>

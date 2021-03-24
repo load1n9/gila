@@ -190,7 +190,27 @@ let svg = [
     },
     {
         input: ":terminal:",
-        output: `<i class="bi-terminal"></i>`
+        output: `<i class="gila-terminal"></i>`
+    },
+    {
+        input: ":heart:",
+        output: `<i class="gila-heart"></i>`
+    },
+    {
+        input: ":above:",
+        output: `<i class="gila-above"></i>`
+    },
+    {
+        input: ":rocket:",
+        output: `<i class="gila-rocket"></i>`
+    },
+    {
+        input: ":tick:",
+        output: `<i class="gila-tick"></i>`
+    },
+    {
+        input: ":windmill:",
+        output: `<i class="gila-windmill"></i>`
     },
     {
         input: ":twitch:",
@@ -260,4 +280,4 @@ class GilaMarkdown2 {
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
-module.exports =  GilaMarkdown1
+module.exports = GilaMarkdown1
