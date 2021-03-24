@@ -37,13 +37,6 @@ function changeHost(roomnum) {
         })
     }
 }
-// Change the host label
-socket.on('changeHostLabel', function(data) {
-    var user = data.username
-    // Change label
-    var hostlabel = document.getElementById('hostlabel')
-    hostlabel.innerHTML = "<i class=\"fas fa-user\"></i> Current Host: " + user
-})
 
 // When the host leaves, the server calls this function on the next socket
 socket.on('autoHost', function(data) {
@@ -73,69 +66,12 @@ socket.on('compareHost', function(data) {
     var hostTime = data.currTime
     var hostState = data.state
 
-    switch (currPlayer) {
-        case 0:
-            var currTime = player.getCurrentTime()
-            var state = playerStatus
+    var currTime = media.currentTime
+    var state = media.paused
 
-            // If out of sync
-            console.log("curr: " + currTime + " Host: " + hostTime)
-            if (currTime < hostTime - 2 || currTime > hostTime + 2) {
-                disconnected()
-            }
-
-            break;
-        case 1:
-            var currTime = dailyPlayer.currentTime
-            var state = dailyPlayer.paused;
-
-            // If out of sync
-            console.log("curr: " + currTime + " Host: " + hostTime)
-            if (currTime < hostTime - 2 || currTime > hostTime + 2) {
-                disconnected()
-            }
-
-            break;
-        case 2:
-            vimeoPlayer.getCurrentTime().then(function(seconds) {
-                // seconds = the current playback position
-                var currTime = seconds
-
-                // Need to nest async functions
-                vimeoPlayer.getPaused().then(function(paused) {
-                    // paused = whether or not the player is paused
-                    var state = paused
-
-                    // If out of sync
-                    console.log("curr: " + currTime + " Host: " + hostTime)
-                    if (currTime < hostTime - 2 || currTime > hostTime + 2) {
-                        disconnected()
-                    }
-
-                }).catch(function(error) {
-                    // an error occurred
-                    console.log("Error: Could not retrieve Vimeo Player state")
-                });
-
-            }).catch(function(error) {
-                // an error occurred
-                console.log("Error: Could not retrieve Vimeo player current time")
-            });
-
-            break;
-        case 3:
-            var currTime = media.currentTime
-            var state = media.paused
-
-            // If out of sync
-            console.log("curr: " + currTime + " Host: " + hostTime)
-            if (currTime < hostTime - 2 || currTime > hostTime + 2) {
-                disconnected()
-            }
-
-            break;
-        default:
-            console.log("Error invalid player id")
+    // If out of sync
+    if (currTime < hostTime - 2 || currTime > hostTime + 2) {
+        disconnected()
     }
 });
 

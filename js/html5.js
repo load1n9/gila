@@ -43,6 +43,5 @@ function html5Play() {
 
 // Load video
 function htmlLoadVideo(videoId) {
-    console.log("changing video to: " + videoId)
     media.src = videoId
 }

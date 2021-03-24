@@ -15,9 +15,6 @@ rooms = [];
 // Store all of the sockets and their respective room numbers
 userrooms = {}
 
-YT3_API_KEY = process.env.YT3_API_KEY;
-DM_API_KEY = process.env.DM_API_KEY;
-
 // Set given room for url parameter
 var given_room = ""
 
@@ -27,7 +24,7 @@ server.listen(process.env.PORT || 3000);
 console.log('Server Started . . .');
 
 rooms_ig = new Object();
-//console.log(new GilaMarkdown("*hello*").init())
+// console.log(new GilaMarkdown("*hello*").init())
 
 app.get('/:room', function (req, res) {
     given_room = req.params.room
@@ -47,20 +44,13 @@ io.sockets.on('connection', function (socket) {
         id: given_room
     })
 
-    // io.sockets.emit('broadcast',{ description: connections.length + ' clients connected!'});
-
-    // For now have it be the same room for everyone!
     socket.join("room-" + roomno);
 
-    //Send this event to everyone in the room.
-    //io.sockets.in("room-"+roomno).emit('connectToRoom', "You are in room no. "+roomno);
-
-    // reset url parameter
+    // Reset URL parameter
     // Workaround because middleware was not working right
     socket.on('reset url', function (data) {
         given_room = ""
     });
-    //console.log(rooms_ig);
 
     // Disconnect
     socket.on('disconnect', function (data) {
@@ -72,10 +62,6 @@ io.sockets.on('connection', function (socket) {
         }
 
         connections.splice(connections.indexOf(socket), 1);
-        console.log(socket.id + ' Disconnected: %s sockets connected', connections.length);
-        // console.log(rooms_ig['room-' + socket.roomnum])
-        // console.log(socket.roomnum)
-
 
         // HOST DISCONNECT
         // Need to check if current socket is the host of the roomnum
@@ -92,7 +78,6 @@ io.sockets.on('connection', function (socket) {
             try {
                 if (socket.id == room.host) {
                     // Reassign
-                    console.log("hello i am the host " + socket.id + " and i am leaving my responsibilities to " + room.sockets[1].id)
                     io.to(room.sockets[1].id).emit('autoHost', {
                         roomnum: roomnum
                     })
@@ -141,7 +126,6 @@ io.sockets.on('connection', function (socket) {
         }
 
         // Checks if the room exists or not
-        // console.log(rooms_ig['room-' + socket.roomnum] !== undefined)
         if (rooms_ig['room-' + socket.roomnum] === undefined) {
             socket.send(socket.id)
             // Sets the first socket to join as the host
@@ -150,63 +134,34 @@ io.sockets.on('connection', function (socket) {
 
             // Set the host on the client side
             socket.emit('setHost');
-            //console.log(socket.id)
         } else {
-            console.log(socket.roomnum)
             host = rooms_ig['room-' + socket.roomnum].host
         }
 
         // Actually join the room
-        console.log(socket.username + " connected to room-" + socket.roomnum)
         socket.join("room-" + socket.roomnum);
 
         // Sets the default values when first initializing
         if (init) {
             // Sets the host
-            console.log(rooms_ig);
-            console.log(socket.roomnum);
             rooms_ig['room-' + socket.roomnum] = new Object();
             rooms_ig['room-' + socket.roomnum].sockets = new Array();
             rooms_ig['room-' + socket.roomnum].host = host
             // Default Player
             rooms_ig['room-' + socket.roomnum].currPlayer = 0
             // Default video
-            rooms_ig['room-' + socket.roomnum].currVideo = {
-                yt: '2mz3oytpugs',
-                dm: 'x26m1j4',
-                vimeo: '76979871',
-                html5: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-            }
+            rooms_ig['room-' + socket.roomnum].currVideo = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
             // Previous Video
             rooms_ig['room-' + socket.roomnum].prevVideo = {
-                yt: {
-                    id: '2mz3oytpugs',
-                    time: 0
-                },
-                dm: {
-                    id: 'x26m1j4',
-                    time: 0
-                },
-                vimeo: {
-                    id: '76979871',
-                    time: 0
-                },
-                html5: {
-                    id: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                    time: 0
-                }
+                id: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                time: 0
             }
             // Host username
             rooms_ig['room-' + socket.roomnum].hostName = socket.username
             // Keep list of online users
             rooms_ig['room-' + socket.roomnum].users = [socket.username]
             // Set an empty queue
-            rooms_ig['room-' + socket.roomnum].queue = {
-                yt: [],
-                dm: [],
-                vimeo: [],
-                html5: []
-            }
+            rooms_ig['room-' + socket.roomnum].queue = []
         }
         rooms_ig['room-' + socket.roomnum].sockets.push(socket);
 
@@ -219,41 +174,9 @@ io.sockets.on('connection', function (socket) {
         updateQueueVideos()
 
         // Gets current video from room variable
-        switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-            case 0:
-                var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.yt
-                break;
-            case 1:
-                var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.dm
-                break;
-            case 2:
-                var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.vimeo
-                break;
-            case 3:
-                var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.html5
-                break;
-            default:
-                console.log("Error invalid player id")
-        }
-        var currYT = rooms_ig['room-' + socket.roomnum].currVideo.yt
+        var currVideo = rooms_ig['room-' + socket.roomnum].currVideo
 
-        // Change the video player to current One
-        switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-            case 0:
-                // YouTube is default so do nothing
-                break;
-            case 1:
-                io.sockets.in("room-" + socket.roomnum).emit('createDaily', {});
-                break;
-            case 2:
-                io.sockets.in("room-" + socket.roomnum).emit('createVimeo', {});
-                break;
-            case 3:
-                io.sockets.in("room-" + socket.roomnum).emit('createHTML5', {});
-                break;
-            default:
-                console.log("Error invalid player id")
-        }
+        io.sockets.in("room-" + socket.roomnum).emit('createPlayer', {});
 
         // Change the video to the current one
         socket.emit('changeVideoClient', {
@@ -262,41 +185,19 @@ io.sockets.on('connection', function (socket) {
 
         // Get time from host which calls change time for that socket
         if (socket.id != host) {
-            //socket.broadcast.to(host).emit('getTime', { id: socket.id });
-            console.log("call the damn host " + host)
-
             // Set a timeout so the video can load before it syncs
             setTimeout(function () {
                 socket.broadcast.to(host).emit('getData');
             }, 1000);
-            //socket.broadcast.to(host).emit('getData');
 
             // Push to users in the room
             rooms_ig['room-' + socket.roomnum].users.push(socket.username)
-
-            // socket.emit('changeVideoClient', {
-            //     videoId: currVideo
-            // });
-
-            // This calls back the function on the host client
-            //callback(true)
-
-            // DISABLE CONTROLS - DEPRECATED
-            // socket.emit('hostControls');
         } else {
             console.log("I am the host")
-            //socket.emit('auto sync');
-
-            // Auto syncing is not working atm
-            // socket.broadcast.to(host).emit('auto sync');
         }
 
         // Update online users
         updateRoomUsers(socket.roomnum)
-
-        // This is all of the rooms
-        // rooms_ig['room-1'].currVideo = "this is the video"
-        // console.log(rooms_ig['room-1']);
     });
     // ------------------------------------------------------------------------
 
@@ -330,42 +231,14 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.to("room-" + roomnum).emit('justSeek', {
             time: currTime
         });
-
-        // Sync up
-        // host = rooms_ig['room-' + roomnum].host
-        // console.log("let me sync "+host)
-        // socket.broadcast.to(host).emit('getData');
     });
 
     socket.on('play next', function (data, callback) {
         var videoId = "QUEUE IS EMPTY"
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    if (rooms_ig['room-' + socket.roomnum].queue.yt.length > 0) {
-                        // Gets the video id from the room object
-                        videoId = rooms_ig['room-' + socket.roomnum].queue.yt.shift().videoId
-                    }
-                    break;
-                case 1:
-                    if (rooms_ig['room-' + socket.roomnum].queue.dm.length > 0) {
-                        videoId = rooms_ig['room-' + socket.roomnum].queue.dm.shift().videoId
-                    }
-                    break;
-                case 2:
-                    if (rooms_ig['room-' + socket.roomnum].queue.dm.length > 0) {
-                        videoId = rooms_ig['room-' + socket.roomnum].queue.vimeo.shift().videoId
-                    }
-                    break;
-                case 3:
-                    if (rooms_ig['room-' + socket.roomnum].queue.html5.length > 0) {
-                        videoId = rooms_ig['room-' + socket.roomnum].queue.html5.shift().videoId
-                    }
-                    break;
-                default:
-                    console.log("Error invalid player id")
+            if (rooms_ig['room-' + socket.roomnum].queue.length > 0) {
+                videoId = rooms_ig['room-' + socket.roomnum].queue.shift().videoId
             }
-            // console.log(videoId)
             // Remove video from the front end
             updateQueueVideos()
             callback({
@@ -400,96 +273,17 @@ io.sockets.on('connection', function (socket) {
             var user = data.user
             var videoId = data.videoId
             var title = ""
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    // See yt.js file
-                    socket.emit('get title', {
-                        videoId: videoId,
-                        user: user,
-                        api_key: YT3_API_KEY
-                    }, function (data) {
-                        videoId = data.videoId
-                        title = data.title
-                        rooms_ig['room-' + socket.roomnum].queue.yt.push({
-                            videoId: videoId,
-                            title: title
-                        })
-                        console.log(rooms_ig['room-' + socket.roomnum].queue.yt)
-                        // Update front end
-                        updateQueueVideos()
-                    })
-                    break;
-                case 1:
-                    rooms_ig['room-' + socket.roomnum].queue.dm.push({
-                        videoId: videoId,
-                        title: title
-                    })
-                    break;
-                case 2:
-                    rooms_ig['room-' + socket.roomnum].queue.vimeo.push({
-                        videoId: videoId,
-                        title: title
-                    })
-                    break;
-                case 3:
-                    rooms_ig['room-' + socket.roomnum].queue.html5.push({
-                        videoId: videoId,
-                        title: title
-                    })
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
-        }
-    })
-
-    // Enqueue playlist
-    // Gets all of the playlist videos and enqueues them
-    // Only supported for YouTube
-    socket.on('enqueue playlist', function (data) {
-        if (rooms_ig['room-' + socket.roomnum] !== undefined) {
-            var user = data.user
-            var playlistId = data.playlistId
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    // See yt.js file
-                    socket.emit('get playlist videos', {
-                        playlistId: playlistId,
-                        user: user,
-                        api_key: YT3_API_KEY
-                    })
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            rooms_ig['room-' + socket.roomnum].queue.push({
+                videoId: videoId,
+                title: title
+            })
         }
     })
 
     // Empty the queue
     socket.on('empty queue', function (data) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    rooms_ig['room-' + socket.roomnum].queue.yt = []
-                    break;
-                case 1:
-                    rooms_ig['room-' + socket.roomnum].queue.dm = []
-                    break;
-                case 2:
-                    rooms_ig['room-' + socket.roomnum].queue.vimeo = []
-                    break;
-                case 3:
-                    rooms_ig['room-' + socket.roomnum].queue.html5 = []
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            rooms_ig['room-' + socket.roomnum].queue = []
             updateQueueVideos()
         }
     })
@@ -498,22 +292,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('remove at', function (data) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
             var idx = data.idx
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    rooms_ig['room-' + socket.roomnum].queue.yt.splice(idx, 1)
-                    break;
-                case 1:
-                    rooms_ig['room-' + socket.roomnum].queue.dm.splice(idx, 1)
-                    break;
-                case 2:
-                    rooms_ig['room-' + socket.roomnum].queue.vimeo.splice(idx, 1)
-                    break;
-                case 3:
-                    rooms_ig['room-' + socket.roomnum].queue.html5.splice(idx, 1)
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            rooms_ig['room-' + socket.roomnum].queue.splice(idx, 1)
             updateQueueVideos()
         }
     })
@@ -523,23 +302,7 @@ io.sockets.on('connection', function (socket) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
             var idx = data.idx
             var videoId = ""
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    videoId = rooms_ig['room-' + socket.roomnum].queue.yt[idx].videoId
-                    rooms_ig['room-' + socket.roomnum].queue.yt.splice(idx, 1)
-                    break;
-                case 1:
-                    rooms_ig['room-' + socket.roomnum].queue.dm.splice(idx, 1)
-                    break;
-                case 2:
-                    rooms_ig['room-' + socket.roomnum].queue.vimeo.splice(idx, 1)
-                    break;
-                case 3:
-                    rooms_ig['room-' + socket.roomnum].queue.html5.splice(idx, 1)
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            rooms_ig['room-' + socket.roomnum].queue.splice(idx, 1)
             updateQueueVideos()
             callback({
                 videoId: videoId
@@ -556,39 +319,10 @@ io.sockets.on('connection', function (socket) {
             var host = rooms_ig['room-' + socket.roomnum].host
 
             // This changes the room variable to the video id
-            // rooms_ig['room-' + roomnum].currVideo = videoId
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    // Set prev video before changing
-                    rooms_ig['room-' + socket.roomnum].prevVideo.yt.id = rooms_ig['room-' + socket.roomnum].currVideo.yt
-                    rooms_ig['room-' + socket.roomnum].prevVideo.yt.time = time
-                    // Set new video id
-                    rooms_ig['room-' + socket.roomnum].currVideo.yt = videoId
-                    break;
-                case 1:
-                    // Set prev video before changing
-                    rooms_ig['room-' + socket.roomnum].prevVideo.dm.id = rooms_ig['room-' + socket.roomnum].currVideo.dm
-                    rooms_ig['room-' + socket.roomnum].prevVideo.dm.time = time
-                    // Set new video id
-                    rooms_ig['room-' + socket.roomnum].currVideo.dm = videoId
-                    break;
-                case 2:
-                    // Set prev video before changing
-                    rooms_ig['room-' + socket.roomnum].prevVideo.vimeo.id = rooms_ig['room-' + socket.roomnum].currVideo.vimeo
-                    rooms_ig['room-' + socket.roomnum].prevVideo.vimeo.time = time
-                    // Set new video id
-                    rooms_ig['room-' + socket.roomnum].currVideo.vimeo = videoId
-                    break;
-                case 3:
-                    // Set prev video before changing
-                    rooms_ig['room-' + socket.roomnum].prevVideo.html5.id = rooms_ig['room-' + socket.roomnum].currVideo.html5
-                    rooms_ig['room-' + socket.roomnum].prevVideo.html5.time = time
-                    // Set new video id
-                    rooms_ig['room-' + socket.roomnum].currVideo.html5 = videoId
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            rooms_ig['room-' + socket.roomnum].prevVideo.id = rooms_ig['room-' + socket.roomnum].currVideo
+            rooms_ig['room-' + socket.roomnum].prevVideo.time = time
+            // Set new video id
+            rooms_ig['room-' + socket.roomnum].currVideo = videoId
 
             io.sockets.in("room-" + roomnum).emit('changeVideoClient', {
                 videoId: videoId
@@ -601,14 +335,6 @@ io.sockets.on('connection', function (socket) {
             }
 
         }
-
-        // Auto sync with host after 1000ms of changing video
-        // NOT NEEDED ANYMORE, IN THE CHANGEVIDEOCLIENT FUNCTION
-        // setTimeout(function() {
-        //     socket.broadcast.to(host).emit('getData');
-        // }, 1000);
-
-        // console.log(rooms_ig['room-1'])
     });
 
     // Change to previous video
@@ -618,28 +344,9 @@ io.sockets.on('connection', function (socket) {
             var host = rooms_ig['room-' + socket.roomnum].host
 
             // This sets the videoId to the proper previous video
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    var videoId = rooms_ig['room-' + socket.roomnum].prevVideo.yt.id
-                    var time = rooms_ig['room-' + socket.roomnum].prevVideo.yt.time
-                    break;
-                case 1:
-                    var videoId = rooms_ig['room-' + socket.roomnum].prevVideo.dm.id
-                    var time = rooms_ig['room-' + socket.roomnum].prevVideo.dm.time
-                    break;
-                case 2:
-                    var videoId = rooms_ig['room-' + socket.roomnum].prevVideo.vimeo.id
-                    var time = rooms_ig['room-' + socket.roomnum].prevVideo.vimeo.time
-                    break;
-                case 3:
-                    var videoId = rooms_ig['room-' + socket.roomnum].prevVideo.html5.id
-                    var time = rooms_ig['room-' + socket.roomnum].prevVideo.html5.time
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            var videoId = rooms_ig['room-' + socket.roomnum].prevVideo.id
+            var time = rooms_ig['room-' + socket.roomnum].prevVideo.time
 
-            console.log("Hot Swapping to Previous Video: " + videoId + " at current time: " + time)
             // Callback to go back to client to request the video change
             callback({
                 videoId: videoId,
@@ -652,22 +359,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('get video', function (callback) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
             // Gets current video from room variable
-            switch (rooms_ig['room-' + socket.roomnum].currPlayer) {
-                case 0:
-                    var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.yt
-                    break;
-                case 1:
-                    var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.dm
-                    break;
-                case 2:
-                    var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.vimeo
-                    break;
-                case 3:
-                    var currVideo = rooms_ig['room-' + socket.roomnum].currVideo.html5
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            var currVideo = rooms_ig['room-' + socket.roomnum].currVideo
             // Call back to return the video id
             callback(currVideo)
         }
@@ -680,27 +372,10 @@ io.sockets.on('connection', function (socket) {
             var playerId = data.playerId
 
             io.sockets.in("room-" + roomnum).emit('pauseVideoClient');
-            // console.log(playerId)
-            switch (playerId) {
-                case 0:
-                    io.sockets.in("room-" + roomnum).emit('createYoutube', {});
-                    break;
-                case 1:
-                    io.sockets.in("room-" + roomnum).emit('createDaily', {});
-                    break;
-                case 2:
-                    io.sockets.in("room-" + roomnum).emit('createVimeo', {});
-                    break;
-                case 3:
-                    io.sockets.in("room-" + roomnum).emit('createHTML5', {});
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            io.sockets.in("room-" + roomnum).emit('createPlayer', {});
 
             // This changes the room variable to the player id
             rooms_ig['room-' + roomnum].currPlayer = playerId
-            // console.log(rooms_ig['room-' + socket.roomnum].currPlayer)
 
             // This syncs the host whenever the player changes
             host = rooms_ig['room-' + socket.roomnum].host
@@ -714,22 +389,7 @@ io.sockets.on('connection', function (socket) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
             var playerId = data.playerId
 
-            switch (playerId) {
-                case 0:
-                    socket.emit('createYoutube', {});
-                    break;
-                case 1:
-                    socket.emit('createDaily', {});
-                    break;
-                case 2:
-                    socket.emit('createVimeo', {});
-                    break;
-                case 3:
-                    socket.emit('createHTML5', {});
-                    break;
-                default:
-                    console.log("Error invalid player id")
-            }
+            socket.emit('createPlayer', {});
             // After changing the player, resync with the host
             host = rooms_ig['room-' + socket.roomnum].host
             socket.broadcast.to(host).emit('getData')
@@ -752,14 +412,12 @@ io.sockets.on('connection', function (socket) {
         // Data is username
         var encodedUser = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         socket.username = encodedUser;
-        //console.log(socket.username)
         users.push(socket.username);
         updateUsernames();
     });
 
     // Changes time for a specific socket
     socket.on('change time', function (data) {
-        // console.log(data);
         var caller = data.id
         var time = data.time
         socket.broadcast.to(caller).emit('changeTime', {
@@ -783,23 +441,17 @@ io.sockets.on('connection', function (socket) {
 
     // Emits the player status
     socket.on('player status', function (data) {
-        // console.log(data);
-        console.log(data)
     });
 
     // Change host
     socket.on('change host', function (data) {
         if (rooms_ig['room-' + socket.roomnum] !== undefined) {
-            console.log(rooms_ig['room-' + socket.roomnum])
             var roomnum = data.room
             var newHost = socket.id
             var currHost = rooms_ig['room-' + socket.roomnum].host
 
             // If socket is already the host!
             if (newHost != currHost) {
-                console.log("I want to be the host and my socket id is: " + newHost);
-                //console.log(rooms_ig['room-' + socket.roomnum])
-
                 // Broadcast to current host and set false
                 socket.broadcast.to(currHost).emit('unSetHost')
                 // Reset host
@@ -850,40 +502,17 @@ io.sockets.on('connection', function (socket) {
     // Calls notify functions
     socket.on('notify alerts', function (data) {
         var alert = data.alert
-        console.log("entered notify alerts")
         var encodedUser = ""
         if (data.user) {
             encodedUser = data.user.replace(/</g, "&lt;").replace(/>/g, "&gt;")
         }
 
         switch (alert) {
-            // Enqueue alert
-            case 0:
-                var encodedTitle = ""
-                if (data.title) {
-                    encodedTitle = data.title.replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                }
-                io.sockets.in("room-" + socket.roomnum).emit('enqueueNotify', {
-                    user: encodedUser,
-                    title: encodedTitle
-                })
-                break;
-                // Host Change Alert
+            // Host Change Alert
             case 1:
                 io.sockets.in("room-" + socket.roomnum).emit('changeHostNotify', {
                     user: encodedUser
                 })
-                break;
-                // Empty Queue Alert
-            case 2:
-                io.sockets.in("room-" + socket.roomnum).emit('emptyQueueNotify', {
-                    user: encodedUser
-                })
-                break;
-                // Beta Message Alert
-            case 3:
-                console.log("yoyoyoyoyo")
-                io.sockets.in("room-" + socket.roomnum).emit('betaNotify', {})
                 break;
             default:
                 console.log("Error alert id")
@@ -898,16 +527,8 @@ io.sockets.on('connection', function (socket) {
 
         //Delay of 5 seconds
         var delay = 5000;
-
         async.forever(
-
             function (next) {
-                // Continuously update stream with data
-                //var time = io.sockets.in("room-"+1).emit('getTime', {});
-                //Store data in database
-                //console.log(time);
-
-                console.log("i am auto syncing")
                 socket.emit('syncHost');
 
                 //Repeat after the delay
@@ -925,8 +546,7 @@ io.sockets.on('connection', function (socket) {
     // Some update functions --------------------------------------------------
     // Update all users
     function updateUsernames() {
-        // io.sockets.emit('get users', users);
-        // console.log(users)
+        return
     }
 
     // Update the room usernames
