@@ -56,13 +56,10 @@ function changeVideo(roomnum, videoId) {
 
 // Does this even work?
 function changeVideoId(roomnum) {
-    //document.getElementById("inputVideoId").innerHTML = id;
-    //changeVideoId
     socket.emit('change video', {
         room: roomnum,
         videoId: document.getElementById("inputVideoId").value
     });
-    //player.loadVideoById(videoId);
 }
 
 // Change to previous video

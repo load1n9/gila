@@ -534,19 +534,16 @@ io.sockets.on('connection', function (socket) {
 
         //Delay of 5 seconds
         var delay = 5000;
-        async.forever(
-            function (next) {
-                socket.emit('syncHost');
+        async.forever(function (next) {
+            socket.emit('syncHost');
 
-                //Repeat after the delay
-                setTimeout(function () {
-                    next();
-                }, delay)
-            },
-            function (err) {
-                console.error(err);
-            }
-        );
+            // Repeat after the delay
+            setTimeout(function () {
+                next();
+            }, delay);
+        },  function (err) {
+            console.error(err);
+        });
     });
 
 

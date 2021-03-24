@@ -272,15 +272,15 @@
                 // If name is too long
                 else if ($username.val().length > 30) {
                     var noname = document.getElementById('missinginfo')
-                    noname.innerHTML = "Your name can't possibly be over 30 characters!"
+                    noname.innerHTML = "Your name can't be over 30 characters!"
                 }
-                // If roomnate
+                // If room ID is too long
                 else if ($roomnum.val().length > 50) {
                     var noname = document.getElementById('missinginfo')
                     noname.innerHTML =
                         "How are you going to remember a room code that has more than 50 characters?"
                 }
-                // If Room contains symbols
+                // If room ID contains symbols
                 // Can only be reached if the user decided to be sneaky and paste them!
                 else if (!nosymbols.test($roomnum.val())) {
                     var noname = document.getElementById('missinginfo')
@@ -317,11 +317,13 @@
                     // Join room
                     socket.emit('new room', $roomnum.val(), function (data) {
                         // This should only call back if the client is the host
+                        socket.emit('auto sync');
                         if (data) {
                             syncVideo(roomnum)
                         }
                     });
 
+                    socket.emit('sync host', {});
                     $username.val('');
                 }
             });
@@ -331,8 +333,6 @@
                 for (i = 0; i < data.length; i++) {
                     html += '<li style="padding-right: 10em;" class="list-group-item chat-users">' +
                         data[i] + '</li>';
-                    // html += '<div class="well well-sm message-well">' + data[i] + '</div>';
-                    // <div class="well well-sm message-well"><strong>
                 }
 
                 $users.html(html)
@@ -364,28 +364,6 @@
 
         });
 
-        // Remove the video from the queue at idx
-        function removeAt(idx) {
-            socket.emit('remove at', {
-                idx: idx
-            })
-        }
-
-        function playAt(idx) {
-            socket.emit('play at', {
-                idx: idx
-            }, function (data) {
-                var videoId = data.videoId
-
-                // Change the video
-                socket.emit('change video', {
-                    room: roomnum,
-                    videoId: videoId,
-                    time: 0
-                })
-            })
-        }
-
         // Turn off the lights!
         var per = 0;
         $(document).ready(function () {
@@ -407,8 +385,8 @@
 
         // Set ID
         socket.on('set id', function (data) {
-            // Ensure no valid id too
-            if (data.id != "" && nosymbols.test(data.id)) {
+            // Ensure no valid ID too
+            if (!!data.id && nosymbols.test(data.id)) {
                 document.getElementById('roomnum').value = data.id
                 // Probably should not force it to be readonly
             }
