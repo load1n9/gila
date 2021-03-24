@@ -1,6 +1,6 @@
 # Gila Monster
 
-![Nice logo :D](https://raw.githubusercontent.com/load1n9/gila/master/img/gila.svg)
+<img src="https://raw.githubusercontent.com/load1n9/gila/master/img/gila.svg" alt="Nice logo :D" width="256"></img>
 
 ---
 
