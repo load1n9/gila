@@ -20,11 +20,13 @@ media.addEventListener("play", function(e) {
         getHostData(roomnum)
     }
 })
+
 media.addEventListener("pause", function(e) {
     if (host) {
         pauseOther(roomnum)
     }
 })
+
 media.addEventListener("seeked", function(e) {
     var currTime = media.currentTime
     if (host) {

@@ -1,7 +1,8 @@
 // Calls the play video function on the server
 function playVideo(roomnum) {
     socket.emit('play video', {
-        room: roomnum
+        room: roomnum,
+        id: document.getElementById("inputVideoId").value
     });
 }
 
@@ -47,21 +48,18 @@ function changeVideo(roomnum, videoId) {
             time: time
         });
     } else {
-        console.log("User entered an invalid video url :(")
+        console.error("User entered an invalid video url :(")
         invalidURL()
     }
     //player.loadVideoById(videoId);
 }
 
 // Does this even work?
-function changeVideoId(roomnum, id) {
-    //var videoId = 'sjk7DiH0JhQ';
-    document.getElementById("inputVideoId").innerHTML = id;
+function changeVideoId(roomnum) {
     socket.emit('change video', {
         room: roomnum,
-        videoId: id
+        videoId: document.getElementById("inputVideoId").value
     });
-    //player.loadVideoById(videoId);
 }
 
 // Change to previous video
@@ -159,7 +157,6 @@ socket.on('changeVideoClient', function(data) {
     // The original change video call updates the value for the room
     // This probably is more inefficient than just passing in the parameter but is safer?
     socket.emit('get video', function(id) {
-        console.log("it really is " + id)
         videoId = id
         // This changes the video
         id = videoId
