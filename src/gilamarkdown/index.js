@@ -147,11 +147,104 @@ let dir = [
         output: "2639"
     }
 ];
+let svg = [
+    {
+        input: ":github:",
+        output: `<i class="bi-github"></i>`
+    },
+    {
+        input: ":discord:",
+        output: `<i class="bi-discord"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":google:",
+        output: `<i class="bi-google"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":moon:",
+        output: `<i class="bi-moon"></i>`
+    },
+    {
+        input: ":moon-stars:",
+        output: `<i class="bi-moon-stars"></i>`
+    },
+    {
+        input: ":pin:",
+        output: `<i class="bi-pin"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":terminal:",
+        output: `<i class="bi-terminal"></i>`
+    },
+    {
+        input: ":twitch:",
+        output: `<i class="bi-twitch"></i>`
+    },
+    {
+        input: ":twitter:",
+        output: `<i class="bi-twitter"></i>`
+    },
+    {
+        input: ":youtube:",
+        output: `<i class="bi-youtube"></i>`
+    },
+    {
+        input: ":javascript:",
+        output: `<i class="fab fa-js-square"></i>`
+    },
+    {
+        input: ":js:",
+        output: `<i class="fab fa-js-square"></i>`
+    },
+    {
+        input: ":pepper:",
+        output: `<i class="fab fa-pepper-hot"></i>`
+    },
+    {
+        input: ":chili:",
+        output: `<i class="fab fa-pepper-hot"></i>`
+    },
+    {
+        input: ":rust:",
+        output: `<i class="fab fa-rust"></i>`
+    },
+    {
+        input: ":react:",
+        output: `<i class="fab fa-react"></i>`
+    },
+    {
+        input: ":bootstrap:",
+        output: `<i class="fab fa-bootstrap"></i>`
+    },
+    {
+        input: ":angular:",
+        output: `<i class="fab fa-angular"></i>`
+    }, 
+];
 class EmoteParser {
     constructor(text1){
         this.output = text1;
         dir.forEach((e)=>{
             this.output = this.output.replace(e.input, `&#x${e.output}`);
+        });
+        svg.forEach((e)=>{
+            this.output = this.output.replace(e.input, e.output);
         });
     }
 }
@@ -163,9 +256,8 @@ class GilaMarkdown2 {
         this.emotes = new EmoteParser1(this.parser.output);
     }
     init() {
-        return  this.emotes.output
+        return this.emotes.output;
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
-
-module.exports = GilaMarkdown1
+module.exports =  GilaMarkdown1
