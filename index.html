@@ -427,6 +427,7 @@
             // Join room
             socket.emit("new room", $roomnum.val(), function (data) {
               // This should only call back if the client is the host
+              socket.emit("sync host", {});
               if (data) {
                 syncVideo(roomnum);
               }
@@ -490,32 +491,6 @@
           }
         });
       });
-
-      // Remove the video from the queue at idx
-      function removeAt(idx) {
-        socket.emit("remove at", {
-          idx: idx,
-        });
-      }
-
-      function playAt(idx) {
-        socket.emit(
-          "play at",
-          {
-            idx: idx,
-          },
-          function (data) {
-            var videoId = data.videoId;
-
-            // Change the video
-            socket.emit("change video", {
-              room: roomnum,
-              videoId: videoId,
-              time: 0,
-            });
-          }
-        );
-      }
 
       // Turn off the lights!
       var per = 0;

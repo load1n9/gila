@@ -21,7 +21,7 @@ var given_room = ""
 app.use(express.static(__dirname + '/'));
 
 server.listen(process.env.PORT || 3000);
-console.log('Server Started . . .');
+console.log("Server Started...'");
 
 rooms_ig = new Object();
 // console.log(new GilaMarkdown("*hello*").init())
@@ -37,7 +37,7 @@ var roomno = 1;
 io.sockets.on('connection', function (socket) {
     // Connect Socket
     connections.push(socket);
-    console.log('Connected: %s sockets connected', connections.length);
+    console.log("Connected: %s sockets connected", connections.length);
 
     // Set default room, if provided in url
     socket.emit('set id', {
@@ -210,7 +210,14 @@ io.sockets.on('connection', function (socket) {
     // Play video
     socket.on('play video', function (data) {
         var roomnum = data.room
-        io.sockets.in("room-" + roomnum).emit('playVideoClient');
+        if (!!data.id && rooms_ig['room-' + socket.roomnum].currVideo != data.id) {
+            io.sockets.in('room-' + roomnum).emit('changeVideoClient', {
+                videoId: data.id
+            });
+            rooms_ig['room-' + socket.roomnum].currVideo = data.id;
+            ///https://gilamonster.herokuapp.com/yvy7mt5hk6r
+        }
+        io.sockets.in('room-' + roomnum).emit('playVideoClient');
     });
 
     // Event Listener Functions
@@ -515,7 +522,7 @@ io.sockets.on('connection', function (socket) {
                 })
                 break;
             default:
-                console.log("Error alert id")
+                console.error("Invalid alert ID")
         }
     })
 
@@ -527,19 +534,16 @@ io.sockets.on('connection', function (socket) {
 
         //Delay of 5 seconds
         var delay = 5000;
-        async.forever(
-            function (next) {
-                socket.emit('syncHost');
+        async.forever(function (next) {
+            socket.emit('syncHost');
 
-                //Repeat after the delay
-                setTimeout(function () {
-                    next();
-                }, delay)
-            },
-            function (err) {
-                console.error(err);
-            }
-        );
+            // Repeat after the delay
+            setTimeout(function () {
+                next();
+            }, delay);
+        },  function (err) {
+            console.error(err);
+        });
     });
 
 
