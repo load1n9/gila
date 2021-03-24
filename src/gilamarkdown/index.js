@@ -147,11 +147,24 @@ let dir = [
         output: "2639"
     }
 ];
+let svg = [
+    {
+        input: ":github:",
+        output: `<i class="bi-github"></i>`
+    },
+    {
+        input: ":discord:",
+        output: `<i class="bi-discord"></i>`
+    }
+];
 class EmoteParser {
     constructor(text1){
         this.output = text1;
         dir.forEach((e)=>{
             this.output = this.output.replace(e.input, `&#x${e.output}`);
+        });
+        svg.forEach((e)=>{
+            this.output = this.output.replace(e.input, e.output);
         });
     }
 }
@@ -161,11 +174,8 @@ class GilaMarkdown2 {
         this.tokenizer = new GilaTokenizer1(text2);
         this.parser = new GilaParser1(this.tokenizer.tokens);
         this.emotes = new EmoteParser1(this.parser.output);
-    }
-    init() {
-        return  this.emotes.output
+        console.log(this.emotes.output);
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
-
 module.exports = GilaMarkdown1
