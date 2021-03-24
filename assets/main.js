@@ -78,12 +78,10 @@
 
 	function stateUpdate(evt) {
 		if (!video.duration) {
-			console.log('No video duration yet');
 			video.pause();
 			return;
 		}
 
-		console.log('video metadata', video.duration, video.videoWidth, video.videoHeight);
 		durationInMilliseconds = Math.round(DURATION * 1000);
 		if (remoteClock.accuracy() > 100) {
 			return;

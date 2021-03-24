@@ -63,9 +63,9 @@
 
         <!-- Loading page -->
         <!-- Loader is currently dependent on the dailymotion api because it is the slowest -->
-        <div id="loading">
+        <!--div id="loading">
             <div class="lds-heart"><div></div></div>
-        </div>
+        </div-->
 
         <!-- User Form (First Page) -->
         <div id="userFormArea" class="row">
@@ -99,38 +99,13 @@
             <!-- Heading Row -->
             <div class="row my-4" style="margin-top: 0px !important;">
                 <div class="col-lg-7">
-
-
-
-
-                    <!-- INVITE MOVED TO MODAL -->
-                    <!-- <p id="invite">Invite a friend! Send them the link: streaming-ig.herokuapp.com/ROOMNUM</p> -->
-
                     <!----------------------------------- PLAYER AREA ----------------------------------->
 
-                    <div id='playerArea'>
-                        <div class="video" id="player"></div>
-                        <!-- <iframe class="video" id="player" allowfullscreen="0" rel="0" width="640" height="360" src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1" frameborder="1" style="border: solid 4px #37474F"></iframe> -->
-                    </div>
-
-                    <div id='dailyArea'>
-                        <div class="video" id="player-daily"></div>
-                    </div>
-
-                    <div id='vimeoArea'>
-                        <iframe class="video" id="player-vimeo" src="https://player.vimeo.com/video/76979871"
-                            width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen
-                            allowfullscreen></iframe>
-                    </div>
-
-                    <div id='HTML5Area'>
+                    <div id='PlayerArea'>
                         <div class="html5player">
                             <video
                                 src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                                 width="640" height="360" class="video html5video" id="html5src" controls>
-                                <!-- <source src="video/sintel-short.mp4" type="video/mp4">
-                            <source src="video/sintel-short.webm" type="video/webm"> -->
-                                <!-- fallback content here -->
                             </video>
                         </div>
                     </div>
@@ -152,62 +127,12 @@
                         <input type="Video"
                             style="max-width: 200px; margin-right: .5rem; margin-bottom: .5rem; float: left;"
                             class="form-control" id="inputVideoId" placeholder="Video ID / URL">
-                        <button id="enqueueButton" onclick="enqueueVideoParse(roomnum)" class="btn btn-primary"><i
-                                class="fas fa-plus"></i> Add to Queue</button>
-                        <button id="emptyButton" onclick="emptyQueue(roomnum)" class="btn btn-primary"><i
-                                class="fas fa-trash"></i> Empty Queue</button>
                     </div>
-                    <div>
-                        <!-- <a class="ghost-button-full-color"><i class="far fa-times-circle"></i></a> -->
-                        <button id="changeButton" onclick="changeVideoParse(roomnum)" class="btn btn-primary"><i
-                                class="fas fa-exchange-alt"></i> Change Video</button>
-                        <div style="margin: 10px" class="dropdown">
-                        <button style="background-color: #007bff" class="btn btn-info dropdown-toggle" type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-video"></i> Player
-                        </button>
-                        <div class="form-control dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" onclick="changePlayer(roomnum, 0)"><i class="fab fa-youtube"></i>
-                                YouTube</a>
-                            <a class="dropdown-item" onclick="changePlayer(roomnum, 1)"><img width="14px" height="14px"
-                                    src="img/dailymotion-logo.svg" alt="Daily Motion Logo"> Daily Motion</a>
-                            <a class="dropdown-item" onclick="changePlayer(roomnum, 2)"><i class="fab fa-vimeo"></i>
-                                Vimeo</a>
-                            <a class="dropdown-item" onclick="changePlayer(roomnum, 3)"><i
-                                    class="fas fa-file-video"></i> HTML5 Player (.mp4/.webm) (Beta)</a>
-                        </div>
-                    </div>
-                        <button id="previousButton" onclick="prevVideo(roomnum)" class="btn btn-primary"><i
-                                class="fas fa-step-backward"></i> Previous</button>
-                        <button id="nextButton" onclick="playNext(roomnum)" class="btn btn-primary"><i
-                                class="fas fa-step-forward"></i> Next</button>
-
-                        <br />
-
-                    </div>
-                    <!-- <input type="file" id="html5-input" /> -->
-                
-                    <br />
-
-                    <!-- HTML5 player input -->
-                    <!-- <input type="file" id="html5-input" /> -->
-                    <!-- <input type="Video" style="max-width: 200px; margin-right: .5rem; margin-bottom: .5rem; float: left;" class="form-control" id="inputVideoURL" placeholder="Direct URL to .mp4/.webm"> -->
-
-                    <!-- <p style="display: none" id="html5-message" class="lead">Video File Upload Not Yet Supported</p> -->
-                    <p style="display: none" id="beta-message" class="lead">Queue is currently only supported by YouTube
-                    </p>
-
-
-
                 </div>
 
-                <!-- /.col-lg-8 -->
                 <div>
-                    <!-- <div class="col-md-4"> -->
-                    <!-- <div id="onlineArea" class="row"> -->
                     <hr style="height:0pt; visibility:hidden;" />
 
-                    <!-- <br/> -->
                     <hr style="height:0pt; visibility:hidden;" />
 
                     <!-- Modal -->
@@ -215,16 +140,15 @@
                         <div class="modal-dialog">
 
                             <!-- Modal content-->
-                            <div class="modal-content">
+                            <div class="modal-content bg-dark">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Invite a Friend</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <p>Send a friend your unique room link so they can watch videos too!</p>
-                                    <!-- <p style="text-align: center;" id="invite">streaming-ig.herokuapp.com/ROOMNUM</p> -->
                                     <input class="inv_input" id="inv_input" type="text"
-                                        value="streaming-ig.herokuapp.com/ROOMNUM" class="field left" readonly>
+                                        value="ROOMNUM" class="field left" readonly>
                                 </div>
                                 <div class="modal-footer">
                                     <div style="opacity: 1" class="tooltip">
@@ -239,8 +163,6 @@
 
                         </div>
                     </div>
-                    <!-- </div> -->
-                    <!-- </div> -->
                     <div id="onlineModal" class="modal fade test" role="dialog">
                         <div class="modal-dialog">
 
@@ -255,7 +177,6 @@
                                         <div class="well online-users noscrollbar">
                                             <ul class="list-group" id="users"></ul>
                                         </div>
-                
                                         <!-- Trigger the modal with a button -->
                                     </div>
                                 </div>
@@ -308,23 +229,8 @@
 
             var $vidlist = $('#vidlist');
 
-            //   function send_message() {
-            //       socket.emit('send message', $message.val());
-            //       $message.val('');
-            //   }
-            //
-            //   $(document).keyup(send_message());
-            //   $("input").keypress(function(event) {
-            //     if (event.which == 13) {
-            //         event.preventDefault();
-            //         send_message();
-            //     }
-            // });
-
-
             $messageForm.submit(function (e) {
                 e.preventDefault();
-                // console.log("Submitted");
                 socket.emit('send message', $message.val());
                 $message.val('');
             });
@@ -337,22 +243,18 @@
                 if (last_div !== undefined) {
                     var myRegex = /.*<strong>(.+)<\/strong>.*/g
                     var match = myRegex.exec(last_div.innerHTML)
-                    console.log(last_div.innerHTML)
                     var last_user = ""
                     if (match != null) {
-                        console.log("found the user!" + match[1])
                         last_user = match[1]
                     }
                 }
                 if (data.user != last_user) {
                     $chat.append('<div class="well well-sm message-well"><strong>' + data.user +
                         '</strong>: ' + data.msg + '</div>');
-                    // $vidlist.append('<div class="vid-item"><div class="thumb"><img src="http://img.youtube.com/vi/eg6kNoJmzkY/0.jpg"></div><div class="desc">Jessica Hernandez & the Deltas - Dead Brains</div></div>');
                 }
                 // If you sent the last message, append to previous
                 else {
                     last_div.innerHTML = last_div.innerHTML + " <br> " + data.msg
-                    // $vidlist.append('<div class="vid-item"><div class="thumb"><img src="http://img.youtube.com/vi/eg6kNoJmzkY/0.jpg"></div><div class="desc">Jessica Hernandez & the Deltas - Dead Brains</div></div>');
                 }
                 // $chat.scrollTop = $chat.scrollHeight;
                 // Auto scroll on each message send!
@@ -362,27 +264,18 @@
             // Submit user form
             $userForm.submit(function (e) {
                 e.preventDefault();
-                // console.log("Submitted");
-                // New User
-
-                // Get rid of trailing/leading whitespace
-                // var roomnum_val = $roomnum.val().trim();
-
                 // If name not entered
                 if ($username.val() == "") {
-                    console.log("ENTER A NAME")
                     var noname = document.getElementById('missinginfo')
                     noname.innerHTML = "Surely you have a name right? Enter it below!"
                 }
                 // If name is too long
                 else if ($username.val().length > 30) {
-                    console.log("NAME IS TOO LONG")
                     var noname = document.getElementById('missinginfo')
                     noname.innerHTML = "Your name can't possibly be over 30 characters!"
                 }
                 // If roomnate
                 else if ($roomnum.val().length > 50) {
-                    console.log("ROOM NAME IS TOO LONG")
                     var noname = document.getElementById('missinginfo')
                     noname.innerHTML =
                         "How are you going to remember a room code that has more than 50 characters?"
@@ -390,7 +283,6 @@
                 // If Room contains symbols
                 // Can only be reached if the user decided to be sneaky and paste them!
                 else if (!nosymbols.test($roomnum.val())) {
-                    console.log("ENTER A PROPER ROOMNUMBER")
                     var noname = document.getElementById('missinginfo')
                     noname.innerHTML = ""
                     var noname2 = document.getElementById('missinginfo2')
@@ -402,10 +294,6 @@
                         if (data) {
                             $userFormArea.hide();
                             $roomArea.show();
-
-                            // Move footer to correct position
-                            document.getElementById('footer').style.position = 'relative';
-
                             // Show header buttons!
                             document.getElementById('chat-nav').style.display = 'block';
                             document.getElementById('about-nav').style.display = 'block';
@@ -421,10 +309,8 @@
                             }
 
                             // Sets the invite link (roomnum)
-                            // document.getElementById('invite').innerHTML = "streaming-ig.herokuapp.com/" + roomnum
-                            document.getElementById("inv_input").value =
-                                "streaming-ig.herokuapp.com/" + roomnum
-                            history.pushState('', 'Vynchronize', roomnum);
+                            document.getElementById("inv_input").value = `https://gilamonster.herokuapp.com/${roomnum}`;
+                            history.pushState('', 'Gila', roomnum);
 
                         }
                     });
@@ -432,7 +318,6 @@
                     socket.emit('new room', $roomnum.val(), function (data) {
                         // This should only call back if the client is the host
                         if (data) {
-                            console.log("Host is syncing the new socket!")
                             syncVideo(roomnum)
                         }
                     });
@@ -453,37 +338,10 @@
                 $users.html(html)
             });
 
-            // Updates the queue
-            // Parameters - vidlist, currPlayer, videoId
-            socket.on('get vidlist', function (data) {
-                console.log("i am updating the queue")
-                var yt = data.vidlist.yt
-                var html = ''
-                if (yt.length > 0) {
-                    for (i = 0; i < yt.length; i++) {
-                        html +=
-                            '<li class="vid-item"><div class="thumb"><a href="javascript: removeAt(' +
-                            i +
-                            ')" class="ghost-button-full-color"><i class="far fa-times-circle"></i></a><a href="javascript: playAt(' +
-                            i +
-                            ')"><img src="http://img.youtube.com/vi/' + yt[i].videoId +
-                            '/0.jpg"></a></div><a href="javascript: playAt(' + i + ')" class="desc">' +
-                            yt[i].title + '</a></li>'
-                    }
-                } else {
-                    html += '<li class="vid-item"></li>'
-                }
-
-                $vidlist.html(html)
-            });
-
-
             // Prevent special characters from being typed
             $('#roomnum').on('keypress', function (event) {
                 var nosymbols = new RegExp("^[a-zA-Z0-9\s]+$");
                 var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                console.log(key)
-                console.log(event.keyCode)
                 // Allow enters and spaces to be used still
                 if ($roomnum.val().length > 50 || !nosymbols.test(key) && event.keyCode != 13 && event
                     .keyCode != 32 && event.keyCode != 45 && event.keyCode != 95) {
@@ -528,7 +386,6 @@
             })
         }
 
-
         // Turn off the lights!
         var per = 0;
         $(document).ready(function () {
@@ -548,30 +405,12 @@
             });
         });
 
-        // playlist
-        $(document).ready(function () {
-            $(".arrow-right").bind("click", function (event) {
-                event.preventDefault();
-                $(".vid-list-container").stop().animate({
-                    scrollLeft: "+=336"
-                }, 750);
-            });
-            $(".arrow-left").bind("click", function (event) {
-                event.preventDefault();
-                $(".vid-list-container").stop().animate({
-                    scrollLeft: "-=336"
-                }, 750);
-            });
-        });
-
-        // set id
+        // Set ID
         socket.on('set id', function (data) {
             // Ensure no valid id too
             if (data.id != "" && nosymbols.test(data.id)) {
                 document.getElementById('roomnum').value = data.id
                 // Probably should not force it to be readonly
-                // document.getElementById('roomnum').readOnly = true
-                console.log("You are joining room: " + data.id)
             }
             // Reset url for next person
             // Workaround
@@ -581,7 +420,6 @@
         function copyInvite() {
             /* Get the text field */
             var copyText = document.getElementById("inv_input");
-            console.log(copyText)
             /* Select the text field */
             copyText.select();
             /* Copy the text inside the text field */
@@ -619,17 +457,7 @@
     <script src="js/events.js"></script>
     <script src="js/notify.js"></script>
 
-    <!-- Youtube -->
-    <script src="js/yt.js"></script>
-    <!-- Daily Motion -->
-    <script src="https://api.dmcdn.net/all.js"></script>
-    <script src="js/dm.js"></script>
-    <!-- Vimeo -->
-    <script src="https://player.vimeo.com/api/player.js"></script>
-    <script src="js/vimeo.js"></script>
     <!-- HTML5 Player -->
     <script src="js/html5.js"></script>
-
 </body>
-
 </html>
