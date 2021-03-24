@@ -155,6 +155,54 @@ let svg = [
     {
         input: ":discord:",
         output: `<i class="bi-discord"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":google:",
+        output: `<i class="bi-google"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":moon:",
+        output: `<i class="bi-moon"></i>`
+    },
+    {
+        input: ":moon-stars:",
+        output: `<i class="bi-moon-stars"></i>`
+    },
+    {
+        input: ":pin:",
+        output: `<i class="bi-pin"></i>`
+    },
+    {
+        input: ":droplet:",
+        output: `<i class="bi-droplet"></i>`
+    },
+    {
+        input: ":terminal:",
+        output: `<i class="bi-terminal"></i>`
+    },
+    {
+        input: ":twitch:",
+        output: `<i class="bi-twitch"></i>`
+    },
+    {
+        input: ":twitter:",
+        output: `<i class="bi-twitter"></i>`
+    },
+    {
+        input: ":youtube:",
+        output: `<i class="bi-youtube"></i>`
     }
 ];
 class EmoteParser {
@@ -176,8 +224,9 @@ class GilaMarkdown2 {
         this.emotes = new EmoteParser1(this.parser.output);
     }
     init() {
-        return this.emotes.output
+        return this.emotes.output;
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
-module.exports = GilaMarkdown1
+
+module.exports = GilaMarkdown1 
