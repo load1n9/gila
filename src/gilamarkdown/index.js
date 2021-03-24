@@ -174,7 +174,9 @@ class GilaMarkdown2 {
         this.tokenizer = new GilaTokenizer1(text2);
         this.parser = new GilaParser1(this.tokenizer.tokens);
         this.emotes = new EmoteParser1(this.parser.output);
-        console.log(this.emotes.output);
+    }
+    init() {
+        return this.emotes.output
     }
 }
 const GilaMarkdown1 = GilaMarkdown2;
