@@ -286,7 +286,11 @@
  .test {
      width: 100%;
      height: 100%;
-     color: black;
+ }
+ .test * {
+     background-color:#42454A;
+     border-radius:15px;
+     border-width:0;
  }
 
  .chat-form {
@@ -301,16 +305,19 @@
      display: block;
      padding: 5px !important;
      float: right;
-     /* padding-right: 11em; */
-     height: 140px;
-     width: 270px;
+     height: 100%;
+     width: 100%;
      overflow: scroll;
+     background-color: #42454A;
  }
 
 
  .chat-users {
+     background-color: #42454A;
      padding: .2rem 1rem !important;
      padding-right: 10em !important;
+     color:white;
+     border-width: 0;
  }
 
  .noscrollbar {
