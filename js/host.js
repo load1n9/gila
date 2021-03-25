@@ -1,18 +1,21 @@
 //-----------------------------------------------------------------------------
 // Host stuff
 var host = false
-var notifyfix = false
-
+let notifyfix = false
+let player = document.querySelector('video');
+player.removeAttribute('controls');
 // Sets the host for the room
 socket.on('setHost', function(data) {
     notifyfix = true
     console.log("You are the new host!")
+    player.setAttribute('controls',true);
     host = true
 });
 
 // Unsets the host
 socket.on('unSetHost', function(data) {
     console.log("Unsetting host")
+    player.removeAttribute('controls');
     host = false
 });
 
@@ -29,7 +32,7 @@ socket.on('syncHost', function(data) {
 
 // Change the host
 function changeHost(roomnum) {
-    if (!host){
+    if (!host && document.getElementsByClassName("online-users")[0].children[0].childElementCount < 2){
         socket.emit('change host', {
             room: roomnum
         });
