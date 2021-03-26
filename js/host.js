@@ -1,6 +1,10 @@
 //-----------------------------------------------------------------------------
 // Host stuff
-var host = false
+let host = false
+
+if (document.getElementsByClassName("online-users")[0].children[0].childElementCount < 2){
+  host = true
+}
 let notifyfix = false
 let player = document.querySelector('video');
 player.removeAttribute('controls');
